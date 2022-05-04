@@ -19,6 +19,7 @@ $user = new User($db);
 $data = json_decode(file_get_contents('php://input'));
 
 if ($data) {
+    // each data item should be checked
     $user->firstname = $data->firstname;
     $user->lastname = $data->lastname;
     $user->email = $data->email;
