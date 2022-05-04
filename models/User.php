@@ -19,6 +19,8 @@ class User
         $this->conn = $db;
     }
 
+
+    //////////////// Methods /////////////////
     // Get Users
     public function read()
     {
@@ -41,5 +43,37 @@ class User
         $stmt->execute();
 
         return $stmt;
+    }
+
+    // Create User
+    public function create()
+    {
+
+        $query = 'INSERT INTO ' . $this->table . '
+            SET
+                firstname = :firstname,
+                lastname = :lastname,
+                email = :email
+        ';
+
+        // Prepare Statement
+        $stmt = $this->conn->prepare($query);
+
+        // validation
+        $this->firstname = htmlspecialchars(strip_tags($this->firstname));
+        $this->lastname = htmlspecialchars(strip_tags($this->lastname));
+        $this->email = htmlspecialchars(strip_tags($this->email));
+
+        $stmt->bindParam(':firstname',$this->firstname);
+        $stmt->bindParam(':lastname', $this->lastname);
+        $stmt->bindParam(':email',$this->email);
+
+        // Excecute query
+        if ($stmt->execute())
+            return true;
+
+        printf('Error: %s.\n', $stmt->error);
+
+        return false;
     }
 }
