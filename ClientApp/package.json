@@ -57,6 +57,8 @@
   },
   "dependencies": {
     "a11y-dialog": "^5.2.0",
+    "datatables.net": "^1.11.5",
+    "datatables.net-bs4": "^1.11.5",
     "flickity": "^2.3.0",
     "formdata-polyfill": "^3.0.13",
     "inuitcss": "^6.0.0",
