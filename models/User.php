@@ -76,4 +76,40 @@ class User
 
         return false;
     }
+
+    // Update User
+    public function update()
+    {
+
+        $query = 'UPDATE ' . $this->table . '
+            SET
+                firstname = :firstname,
+                lastname = :lastname,
+                email = :email
+            WHERE
+                id = :id
+        ';
+
+        // Prepare Statement
+        $stmt = $this->conn->prepare($query);
+
+        // validation
+        $this->firstname = htmlspecialchars(strip_tags($this->firstname));
+        $this->lastname = htmlspecialchars(strip_tags($this->lastname));
+        $this->email = htmlspecialchars(strip_tags($this->email));
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        $stmt->bindParam(':firstname',$this->firstname);
+        $stmt->bindParam(':lastname', $this->lastname);
+        $stmt->bindParam(':email',$this->email);
+        $stmt->bindParam(':id',$this->id);
+
+        // Excecute query
+        if ($stmt->execute())
+            return true;
+
+        printf('Error: %s.\n', $stmt->error);
+
+        return false;
+    }
 }
